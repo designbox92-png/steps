@@ -49,6 +49,7 @@ if (courseCount.count === 0) {
     { 
       title: 'Freelancing Mastery', 
       slug: 'freelancing-mastery', 
+      description: 'Master the art of freelancing and build a sustainable 6-figure business from scratch.',
       price: 15000, 
       category: 'Freelancing', 
       image_url: 'https://picsum.photos/seed/freelance/800/500', 
@@ -70,6 +71,7 @@ if (courseCount.count === 0) {
     { 
       title: 'Digital Marketing Pro', 
       slug: 'digital-marketing', 
+      description: 'Learn high-ROI digital marketing strategies to scale any business online.',
       price: 12000, 
       category: 'Marketing', 
       image_url: 'https://picsum.photos/seed/marketing/800/500', 
@@ -89,6 +91,7 @@ if (courseCount.count === 0) {
     { 
       title: 'UI/UX Design for Freelancers', 
       slug: 'ui-ux-design', 
+      description: 'Design beautiful, user-centric interfaces that clients will love.',
       price: 18000, 
       category: 'Design', 
       image_url: 'https://picsum.photos/seed/design/800/500', 
@@ -106,8 +109,8 @@ if (courseCount.count === 0) {
       skool_url: 'https://www.skool.com/freelancing-skill'
     }
   ];
-  const insertCourse = db.prepare("INSERT INTO courses (title, slug, price, category, image_url, instructor_name, curriculum, learning_outcomes, skool_url, is_published) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)");
-  seedCourses.forEach(c => insertCourse.run(c.title, c.slug, c.price, c.category, c.image_url, c.instructor_name, c.curriculum, c.learning_outcomes, c.skool_url));
+  const insertCourse = db.prepare("INSERT INTO courses (title, slug, description, price, category, image_url, instructor_name, curriculum, learning_outcomes, skool_url, is_published) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)");
+  seedCourses.forEach(c => insertCourse.run(c.title, c.slug, c.description, c.price, c.category, c.image_url, c.instructor_name, c.curriculum, c.learning_outcomes, c.skool_url));
 }
 
 // Seed Sections if empty

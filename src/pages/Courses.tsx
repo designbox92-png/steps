@@ -228,7 +228,7 @@ export const Courses = () => {
                     
                     <div className="absolute bottom-6 left-6 right-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                       <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl p-4 text-white text-xs font-medium">
-                        Learn: {course.description.split('.')[0]}...
+                        Learn: {course.description ? course.description.split('.')[0] : 'Master this skill'}...
                       </div>
                     </div>
                   </div>

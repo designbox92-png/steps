@@ -100,7 +100,7 @@ export const CourseDetail = () => {
                 {course.title}
               </h1>
               <p className="text-lg text-gray-400 mb-10 leading-relaxed max-w-xl">
-                {course.description}
+                {course.description || 'Master this high-income skill with our comprehensive training program.'}
               </p>
               
               <div className="flex flex-wrap gap-6 mb-10">
