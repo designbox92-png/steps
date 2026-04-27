@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useSearchParams, Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useSearchParams, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { 
   CheckCircle2, 
@@ -9,25 +9,15 @@ import {
   ArrowLeft,
   Zap,
   Star,
-  Loader2,
   MessageSquare
 } from 'lucide-react';
-
-interface Course {
-  id: number;
-  title: string;
-  price: number;
-  image_url: string;
-}
+import { COURSES } from '../data/courses';
+import { SITE_SETTINGS } from '../data/settings';
 
 export const Enroll = () => {
   const [searchParams] = useSearchParams();
   const initialCourseId = searchParams.get('courseId');
-  const navigate = useNavigate();
   
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
-  const [loading, setLoading] = useState(true);
   const [isSubmitted, setIsSubmitted] = useState(false);
   
   const [paymentMethod, setPaymentMethod] = useState('easypaisa');
@@ -37,30 +27,12 @@ export const Enroll = () => {
     phone: ''
   });
 
-  useEffect(() => {
-    fetch('/api/courses')
-      .then(res => res.json())
-      .then(data => {
-        setCourses(data);
-        const initial = data.find((c: Course) => c.id === Number(initialCourseId)) || data[0];
-        setSelectedCourse(initial);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, [initialCourseId]);
+  const selectedCourse = COURSES.find(c => c.id === Number(initialCourseId)) || COURSES[0];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitted(true);
   };
-
-  if (loading) {
-    return (
-      <div className="pt-24 min-h-screen flex items-center justify-center">
-        <Loader2 className="animate-spin text-brand-primary" size={48} />
-      </div>
-    );
-  }
 
   if (!selectedCourse) return null;
 
@@ -82,7 +54,7 @@ export const Enroll = () => {
           </p>
           <div className="space-y-4">
             <a 
-              href="https://wa.me/923001234567" 
+              href={`https://wa.me/${SITE_SETTINGS.contact_phone.replace(/[^0-9]/g, '')}`} 
               target="_blank" 
               rel="noopener noreferrer"
               className="w-full bg-[#25D366] text-white py-5 rounded-2xl font-bold text-lg shadow-xl shadow-green-500/20 hover:bg-[#128C7E] transition-all flex items-center justify-center gap-2"

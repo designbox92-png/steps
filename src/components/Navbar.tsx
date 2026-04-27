@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, User as UserIcon, LogOut, ChevronDown } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { SITE_SETTINGS } from '../data/settings';
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -12,18 +13,11 @@ function cn(...inputs: ClassValue[]) {
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [settings, setSettings] = useState<any>({ site_name: 'Freelancing Skill', logo_text: 'FS' });
   const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
-    
-    fetch('/api/settings')
-      .then(res => res.json())
-      .then(data => setSettings(data))
-      .catch(err => console.error('Settings fetch error:', err));
-
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -45,12 +39,8 @@ export const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          {settings.logo_url ? (
-            <img src={settings.logo_url} alt={settings.site_name} className="h-10 w-auto object-contain" referrerPolicy="no-referrer" />
-          ) : (
-            <div className="w-10 h-10 bg-brand-primary rounded-lg flex items-center justify-center text-white font-bold text-xl">{settings.logo_text}</div>
-          )}
-          <span className="font-display font-bold text-2xl tracking-tighter">{settings.site_name}</span>
+          <div className="w-10 h-10 bg-brand-primary rounded-lg flex items-center justify-center text-white font-bold text-xl">{SITE_SETTINGS.logo_text}</div>
+          <span className="font-display font-bold text-2xl tracking-tighter">{SITE_SETTINGS.site_name}</span>
         </Link>
 
         {/* Desktop Nav */}

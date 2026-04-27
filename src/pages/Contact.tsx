@@ -1,37 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Mail, Phone, MapPin, MessageSquare, Send, Clock, Globe, Facebook, Twitter, Instagram, Linkedin, CheckCircle2, Loader2 } from 'lucide-react';
+import { SITE_SETTINGS } from '../data/settings';
 
 export const Contact = () => {
-  const [settings, setSettings] = useState<any>({});
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    fetch('/api/settings')
-      .then(res => res.json())
-      .then(data => setSettings(data));
-  }, []);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-      if (res.ok) {
-        setSuccess(true);
-        setFormData({ name: '', email: '', subject: '', message: '' });
-      }
-    } catch (err) {
-      console.error('Contact error:', err);
-    } finally {
+    // Mock API call
+    setTimeout(() => {
+      setSuccess(true);
+      setFormData({ name: '', email: '', subject: '', message: '' });
       setLoading(false);
-    }
+    }, 1000);
   };
 
   return (
@@ -60,7 +45,7 @@ export const Contact = () => {
                 </div>
                 <div>
                   <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-1">Email Us</h3>
-                  <p className="text-xl font-bold text-brand-dark">{settings.contact_email || 'info@freelancingskill.com'}</p>
+                  <p className="text-xl font-bold text-brand-dark">{SITE_SETTINGS.contact_email}</p>
                 </div>
               </div>
               <div className="flex items-start gap-6">
@@ -69,7 +54,7 @@ export const Contact = () => {
                 </div>
                 <div>
                   <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-1">Call Us</h3>
-                  <p className="text-xl font-bold text-brand-dark">{settings.contact_phone || '+92 300 1234567'}</p>
+                  <p className="text-xl font-bold text-brand-dark">{SITE_SETTINGS.contact_phone}</p>
                 </div>
               </div>
               <div className="flex items-start gap-6">
@@ -78,7 +63,7 @@ export const Contact = () => {
                 </div>
                 <div>
                   <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-1">Visit Us</h3>
-                  <p className="text-xl font-bold text-brand-dark">{settings.contact_address || 'Gulberg III, Lahore, Pakistan'}</p>
+                  <p className="text-xl font-bold text-brand-dark">{SITE_SETTINGS.contact_address}</p>
                 </div>
               </div>
             </div>

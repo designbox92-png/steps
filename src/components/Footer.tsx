@@ -1,29 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Globe, BookOpen, Users, Facebook, Instagram, Youtube } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SITE_SETTINGS } from '../data/settings';
 
 export const Footer = () => {
-  const [settings, setSettings] = useState<any>({ site_name: 'Freelancing Skill', logo_text: 'FS' });
-
-  useEffect(() => {
-    fetch('/api/settings')
-      .then(res => res.json())
-      .then(data => setSettings(data))
-      .catch(err => console.error('Settings fetch error:', err));
-  }, []);
-
   return (
     <footer className="bg-gray-50 pt-20 pb-10 border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-2">
             <div className="flex items-center gap-2 mb-6">
-              {settings.logo_url ? (
-                <img src={settings.logo_url} alt={settings.site_name} className="h-10 w-auto object-contain" referrerPolicy="no-referrer" />
-              ) : (
-                <div className="w-10 h-10 bg-brand-primary rounded-lg flex items-center justify-center text-white font-bold text-xl">{settings.logo_text}</div>
-              )}
-              <span className="font-display font-bold text-2xl tracking-tighter">{settings.site_name}</span>
+              <div className="w-10 h-10 bg-brand-primary rounded-lg flex items-center justify-center text-white font-bold text-xl">{SITE_SETTINGS.logo_text}</div>
+              <span className="font-display font-bold text-2xl tracking-tighter">{SITE_SETTINGS.site_name}</span>
             </div>
             <p className="text-gray-500 max-w-sm mb-8 leading-relaxed">
               Master your freelance career with Umar Farooq. Learn the secrets of digital success and build a sustainable income through expert-led courses.

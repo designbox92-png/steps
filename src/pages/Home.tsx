@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'motion/react';
 import { 
   ArrowRight, 
@@ -11,13 +11,12 @@ import {
   Star,
   Zap,
   BookOpen,
-  MessageSquare,
   Laptop,
-  Quote
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { COURSES } from '../data/courses';
 
-const Hero = ({ content }: { content: any }) => {
+const Hero = () => {
   return (
     <section className="relative pt-32 pb-20 overflow-hidden">
       <div className="absolute top-0 right-0 -z-10 w-1/2 h-full bg-gradient-to-l from-brand-primary/5 to-transparent rounded-l-[100px]" />
@@ -34,15 +33,15 @@ const Hero = ({ content }: { content: any }) => {
             Master High-Income Skills with Umar Farooq
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-display font-bold leading-[1] md:leading-[0.9] mb-6">
-            {content?.title || 'Turn Your Skills into a Global Digital Empire.'}
+            Turn Your Skills into a Global Digital Empire.
           </h1>
           <p className="text-lg text-gray-600 mb-8 max-w-lg leading-relaxed">
-            {content?.subtitle || "Stop trading time for money. I'll show you the exact roadmap to master freelancing, digital marketing, and design to earn 6-figures from the global market."}
+            Stop trading time for money. I'll show you the exact roadmap to master freelancing, digital marketing, and design to earn 6-figures from the global market.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link to="/courses" className="bg-brand-primary text-white px-8 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-brand-dark transition-all group w-full sm:w-auto shadow-xl shadow-brand-primary/20">
-                {content?.cta_text || 'Start Learning Now'}
+                Explore Our Trainings
                 <ArrowRight className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </motion.div>
@@ -162,27 +161,7 @@ const Stats = () => {
 };
 
 const CoursesPreview = () => {
-  const [courses, setCourses] = React.useState<any[]>([]);
-  const [loading, setLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    fetch('/api/courses')
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data)) {
-          setCourses(data.slice(0, 3));
-        } else {
-          console.error('Home CoursesPreview: API returned non-array data', data);
-        }
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error('Home CoursesPreview: Fetch error', err);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) return null;
+  const courses = COURSES.slice(0, 3);
 
   return (
       <section className="py-20 md:py-32 relative overflow-hidden">
@@ -283,8 +262,8 @@ const CoursesPreview = () => {
   );
 };
 
-const Testimonials = ({ testimonials }: { testimonials: any[] }) => {
-  const defaultTestimonials = [
+const Testimonials = () => {
+  const testimonials = [
     {
       name: "Ahmed Khan",
       role: "Top Rated Seller on Upwork",
@@ -300,8 +279,6 @@ const Testimonials = ({ testimonials }: { testimonials: any[] }) => {
       stats: "12+ Team Members"
     }
   ];
-
-  const displayTestimonials = testimonials?.length > 0 ? testimonials : defaultTestimonials;
 
   return (
     <section className="py-32 bg-brand-dark text-white overflow-hidden">
@@ -329,7 +306,7 @@ const Testimonials = ({ testimonials }: { testimonials: any[] }) => {
       <div className="flex flex-col gap-8">
         <div className="flex overflow-hidden group">
           <div className="flex gap-4 md:gap-8 animate-marquee group-hover:pause-animation">
-            {[...displayTestimonials, ...displayTestimonials].map((t, i) => (
+            {[...testimonials, ...testimonials].map((t, i) => (
               <div 
                 key={i} 
                 className="flex-shrink-0 w-[300px] md:w-[450px] bg-white/5 backdrop-blur-sm border border-white/10 p-6 md:p-10 rounded-[32px] md:rounded-[40px] hover:bg-white/10 transition-all group/card"
@@ -397,28 +374,9 @@ const Testimonials = ({ testimonials }: { testimonials: any[] }) => {
 };
 
 export const Home = () => {
-  const [heroContent, setHeroContent] = useState<any>(null);
-  const [whyUsContent, setWhyUsContent] = useState<any>(null);
-
-  useEffect(() => {
-    const fetchSections = async () => {
-      try {
-        const [heroRes, whyUsRes] = await Promise.all([
-          fetch('/api/sections/home_hero'),
-          fetch('/api/sections/home_why_us')
-        ]);
-        if (heroRes.ok) setHeroContent(await heroRes.json());
-        if (whyUsRes.ok) setWhyUsContent(await whyUsRes.json());
-      } catch (err) {
-        console.error('Error fetching home sections:', err);
-      }
-    };
-    fetchSections();
-  }, []);
-
   return (
     <>
-      <Hero content={heroContent} />
+      <Hero />
       <Stats />
       <CoursesPreview />
       
@@ -484,10 +442,10 @@ export const Home = () => {
             Why Learn with Umar Farooq?
           </div>
           <h2 className="text-5xl md:text-6xl font-display font-bold mb-8 leading-tight">
-            {whyUsContent?.title || "Your Shortcut to Digital Mastery."}
+            Your Shortcut to Digital Mastery.
           </h2>
           <p className="text-gray-600 text-lg mb-10 leading-relaxed">
-            {whyUsContent?.subtitle || "Freelancing Skill isn't just another course platform. It's a hub where we test, refine, and share the exact strategies I use to dominate the global marketplace."}
+            Freelancing Skill isn't just another course platform. It's a hub where we test, refine, and share the exact strategies I use to dominate the global marketplace.
           </p>
           
           <div className="grid sm:grid-cols-2 gap-6 mb-12">
@@ -515,7 +473,7 @@ export const Home = () => {
           </motion.div>
         </div>
       </section>
-      <Testimonials testimonials={[]} />
+      <Testimonials />
       
       <section className="py-24 px-6">
         <div className="max-w-5xl mx-auto bg-brand-dark rounded-[50px] p-12 md:p-20 text-center relative overflow-hidden">

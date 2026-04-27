@@ -10,7 +10,6 @@ import { SuccessStories } from './pages/SuccessStories';
 import { About } from './pages/About';
 import { Community } from './pages/Community';
 import { Contact } from './pages/Contact';
-import { Admin } from './pages/Admin';
 
 export default function App() {
   return (
@@ -27,7 +26,6 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="/community" element={<Community />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/admin" element={<Admin />} />
           </Routes>
         </main>
         <Footer />

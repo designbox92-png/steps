@@ -1,91 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Search, Filter, Star, Clock, Users, ArrowRight, CheckCircle2, Loader2, AlertCircle } from 'lucide-react';
+import { Search, Filter, Star, Clock, Users, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-interface Course {
-  id: number;
-  title: string;
-  slug: string;
-  description: string;
-  price: number;
-  category: string;
-  image_url: string;
-  instructor_name: string;
-}
+import { COURSES } from '../data/courses';
 
 export const Courses = () => {
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [categories, setCategories] = useState<string[]>(['All']);
-  const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const [error, setError] = useState<string | null>(null);
+  const uniqueCats = Array.from(new Set(COURSES.map((c) => c.category))).filter(Boolean) as string[];
+  const categories = ['All', ...uniqueCats];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch('/api/courses');
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        const data = await res.json();
-        
-        if (Array.isArray(data)) {
-          setCourses(data);
-          // Derive unique categories from courses
-          const uniqueCats = Array.from(new Set(data.map((c: any) => c.category))).filter(Boolean) as string[];
-          setCategories(['All', ...uniqueCats]);
-        } else {
-          console.error('API returned non-array data:', data);
-          setError('Failed to load courses. Invalid data format.');
-        }
-        
-        setLoading(false);
-      } catch (err) {
-        console.error('Fetch error:', err);
-        setError('Failed to connect to the server. Please try again later.');
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const filteredCourses = courses.filter(course => {
+  const filteredCourses = COURSES.filter(course => {
     const matchesCategory = activeCategory === 'All' || course.category === activeCategory;
     const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
-
-  if (loading) {
-    return (
-      <div className="pt-24 min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="animate-spin text-brand-primary mx-auto mb-4" size={48} />
-          <p className="text-gray-500 font-medium">Loading courses...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="pt-24 min-h-screen flex items-center justify-center px-6">
-        <div className="max-w-md w-full bg-white rounded-[40px] p-12 text-center shadow-xl border border-gray-100">
-          <div className="w-20 h-20 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-8">
-            <AlertCircle size={40} />
-          </div>
-          <h2 className="text-2xl font-display font-bold mb-4">Oops! Something went wrong</h2>
-          <p className="text-gray-600 mb-10 leading-relaxed">{error}</p>
-          <button 
-            onClick={() => window.location.reload()}
-            className="w-full bg-brand-dark text-white py-4 rounded-2xl font-bold hover:bg-brand-primary transition-all"
-          >
-            Try Again
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="pt-24 min-h-screen bg-white">

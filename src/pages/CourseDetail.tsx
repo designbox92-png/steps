@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { 
@@ -7,57 +7,16 @@ import {
   Users, 
   Star, 
   ArrowRight, 
-  Shield, 
-  Zap, 
-  BookOpen,
-  MessageSquare,
   Award,
-  ChevronRight,
   PlayCircle,
-  Loader2,
   ArrowLeft,
-  Globe,
-  Laptop,
-  ShieldCheck
+  Zap,
 } from 'lucide-react';
-
-interface Course {
-  id: number;
-  title: string;
-  slug: string;
-  description: string;
-  price: number;
-  category: string;
-  image_url: string;
-  video_url?: string;
-  instructor_name: string;
-  skool_url: string;
-  curriculum: string; // JSON string
-  learning_outcomes: string; // JSON string
-}
+import { COURSES } from '../data/courses';
 
 export const CourseDetail = () => {
   const { id } = useParams();
-  const [course, setCourse] = useState<Course | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch(`/api/courses/${id}`)
-      .then(res => res.json())
-      .then(data => {
-        setCourse(data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, [id]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="animate-spin text-brand-primary" size={48} />
-      </div>
-    );
-  }
+  const course = COURSES.find(c => c.id === Number(id));
 
   if (!course) {
     return (
