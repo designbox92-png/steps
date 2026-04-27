@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { COURSES } from '../data/courses';
+import { SITE_SETTINGS } from '../data/settings';
 
 const Hero = () => {
   return (
@@ -29,7 +30,7 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-xs font-bold uppercase tracking-wider mb-6">
-            <Zap size={14} />
+            < Zap size={14} />
             Master High-Income Skills with Umar Farooq
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-display font-bold leading-[1] md:leading-[0.9] mb-6">
@@ -47,7 +48,7 @@ const Hero = () => {
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link to="/community" className="bg-white border-2 border-gray-100 px-8 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:border-brand-primary transition-all w-full sm:w-auto">
-                Join Free Community
+                Join Community
               </Link>
             </motion.div>
           </div>
@@ -56,7 +57,7 @@ const Hero = () => {
             <div className="flex -space-x-3">
               {[1, 2, 3, 4].map((i) => (
                 <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-gray-200 overflow-hidden">
-                  <img src={`https://picsum.photos/seed/user${i}/100/100`} alt="User" referrerPolicy="no-referrer" />
+                  <img src={`https://i.pravatar.cc/100?img=${i+20}`} alt="User" referrerPolicy="no-referrer" />
                 </div>
               ))}
             </div>
@@ -64,7 +65,7 @@ const Hero = () => {
               <div className="flex text-yellow-400 mb-0.5">
                 {[1, 2, 3, 4, 5].map((i) => <Star key={i} size={14} fill="currentColor" />)}
               </div>
-              <p className="text-gray-500 font-medium">Trusted by 100k+ Students</p>
+              <p className="text-gray-500 font-medium">Trusted by 5,000+ Students</p>
             </div>
           </div>
         </motion.div>
@@ -481,7 +482,7 @@ export const Home = () => {
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-primary/10 blur-[100px] -z-0" />
           
           <div className="relative z-10">
-            <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-6">Ready to Start Your Freelancing Skill Journey?</h2>
+            <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-6">Ready to Start Your {SITE_SETTINGS.site_name} Journey?</h2>
             <p className="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
               Join the thousands of freelancers earning global income. Start your journey from Beginner to Pro today.
             </p>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Search, Filter, Star, Clock, Users, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Search, Filter, Star, Clock, Users, ArrowRight, CheckCircle2, MessageSquare, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { COURSES } from '../data/courses';
 
@@ -21,51 +21,125 @@ export const Courses = () => {
     <div className="pt-24 min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative pt-32 pb-24 overflow-hidden bg-brand-dark">
+        {/* Animated Background Elements */}
         <div className="absolute top-0 right-0 -z-0 w-1/2 h-full bg-gradient-to-l from-brand-primary/10 to-transparent rounded-l-[100px]" />
-        <div className="absolute -top-24 -left-24 -z-0 w-96 h-96 bg-brand-primary/5 rounded-full blur-3xl" />
+        <motion.div 
+          animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 10, repeat: Infinity }}
+          className="absolute -top-24 -left-24 -z-0 w-96 h-96 bg-brand-primary/10 rounded-full blur-[120px]" 
+        />
+        <motion.div 
+          animate={{ x: [0, 50, 0], y: [0, -30, 0] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/2 right-1/4 -z-0 w-64 h-64 bg-brand-primary/5 rounded-full blur-[80px]" 
+        />
         
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="max-w-3xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-xs font-bold uppercase tracking-wider mb-6"
-            >
-              <Star size={14} fill="currentColor" />
-              Join 5,000+ Successful Students
-            </motion.div>
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-4xl sm:text-5xl md:text-7xl font-display font-bold text-white leading-[1.1] mb-8"
-            >
-              Master the Skills That <span className="text-brand-primary">Drive Results.</span>
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-lg text-gray-400 mb-12 max-w-xl leading-relaxed"
-            >
-              Industry-vetted courses designed to take you from beginner to professional. Start your journey towards financial independence today.
-            </motion.p>
-            
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="relative max-w-xl"
-            >
-              <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-              <input 
-                type="text" 
-                placeholder="What do you want to learn today?"
-                className="w-full bg-white/10 border border-white/20 rounded-2xl py-5 pl-16 pr-6 text-white placeholder:text-gray-500 focus:outline-none focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/10 transition-all text-lg"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </motion.div>
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary/10 text-brand-primary text-xs font-bold uppercase tracking-widest mb-8 border border-brand-primary/20"
+              >
+                <div className="w-2 h-2 rounded-full bg-brand-primary animate-pulse" />
+                Enrollment Open for Summer 2024
+              </motion.div>
+              <motion.h1 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="text-5xl sm:text-6xl md:text-8xl font-display font-bold text-white leading-[0.95] mb-8 tracking-tighter"
+              >
+                Master <span className="text-brand-primary italic">High-Income</span> Skills.
+              </motion.h1>
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-xl text-gray-400 mb-12 max-w-xl leading-relaxed font-medium"
+              >
+                Join 5,000+ students mastering freelancing, digital marketing, and design. Our curriculum is built for those who want to dominate the global digital economy.
+              </motion.p>
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="flex flex-col sm:flex-row gap-6 items-start sm:items-center"
+              >
+                <div className="relative flex-grow max-w-md w-full">
+                  <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <input 
+                    type="text" 
+                    placeholder="Search your future skill..."
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-5 pl-16 pr-6 text-white placeholder:text-gray-500 focus:outline-none focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/10 transition-all text-lg backdrop-blur-sm"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="mt-12 flex items-center gap-8 border-t border-white/10 pt-8"
+              >
+                <div className="flex -space-x-3">
+                  {[1, 2, 3, 4].map((i) => (
+                    <img key={i} src={`https://i.pravatar.cc/100?img=${i+10}`} className="w-10 h-10 rounded-full border-2 border-brand-dark" alt="student" />
+                  ))}
+                  <div className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center text-xs font-bold border-2 border-brand-dark text-white">+5k</div>
+                </div>
+                <div>
+                  <div className="flex gap-1 text-yellow-400 mb-1">
+                    {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="currentColor" />)}
+                  </div>
+                  <p className="text-white text-xs font-bold uppercase tracking-wider">Trusted by Global Students</p>
+                </div>
+              </motion.div>
+            </div>
+
+            <div className="hidden lg:block relative">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4 }}
+                className="relative z-10 bg-white/5 backdrop-blur-md border border-white/10 rounded-[60px] p-12 overflow-hidden shadow-2xl"
+              >
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-brand-primary to-transparent" />
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-12 h-12 bg-brand-primary/20 rounded-2xl flex items-center justify-center text-brand-primary">
+                    <Zap size={24} />
+                  </div>
+                  <div>
+                    <h3 className="text-white font-bold text-xl">Quick Stats</h3>
+                    <p className="text-gray-400 text-sm">Real-time platform impact</p>
+                  </div>
+                </div>
+                <div className="space-y-8">
+                  {[
+                    { label: 'Courses Published', value: '12+', color: 'text-blue-400' },
+                    { label: 'Active Students', value: '5,240', color: 'text-green-400' },
+                    { label: 'Student Earned', value: '$2.5M+', color: 'text-brand-primary' },
+                    { label: 'Global Reach', value: '45+', color: 'text-purple-400' }
+                  ].map((stat, i) => (
+                    <div key={i} className="flex items-center justify-between">
+                      <span className="text-gray-400 font-medium">{stat.label}</span>
+                      <span className={`text-2xl font-display font-bold ${stat.color}`}>{stat.value}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-12 p-6 bg-white/5 rounded-3xl border border-white/5">
+                  <p className="text-gray-400 text-sm italic">"The only platform that focuses on practical results over theory."</p>
+                  <p className="text-white text-xs font-bold mt-3 uppercase tracking-widest">— Umar Farooq</p>
+                </div>
+              </motion.div>
+              
+              {/* Decorative Blur */}
+              <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-brand-primary/20 rounded-full blur-[100px] -z-10" />
+            </div>
           </div>
         </div>
       </section>
@@ -443,38 +517,49 @@ export const Courses = () => {
         </div>
       </section>
 
-      {/* FAQ/Support Section */}
+      {/* FAQ Section */}
       <section className="py-32 bg-gray-50 px-6 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/3 h-full bg-brand-primary/5 rounded-l-[100px] -z-0" />
         
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="grid lg:grid-cols-2 gap-20 items-center">
-            <div>
-              <h2 className="text-4xl md:text-6xl font-display font-bold mb-8 leading-tight">Need Help <span className="text-brand-primary">Choosing?</span></h2>
-              <p className="text-xl text-gray-600 mb-12 leading-relaxed">
-                Our career counselors are available to help you pick the right path based on your interests and goals. Don't let indecision hold you back.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-6">
-                <motion.button 
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-brand-primary text-white px-12 py-5 rounded-2xl font-bold transition-all shadow-2xl shadow-brand-primary/30 flex items-center justify-center gap-3"
-                >
-                  Talk to an Expert
-                  <ArrowRight size={20} />
-                </motion.button>
-                <motion.button 
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-white border-2 border-gray-100 px-12 py-5 rounded-2xl font-bold hover:border-brand-primary transition-all flex items-center justify-center gap-3"
-                >
-                  View FAQ
-                </motion.button>
-              </div>
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">Common <span className="text-brand-primary">Questions</span></h2>
+            <p className="text-gray-600 text-lg">Everything you need to know about our courses and learning journey.</p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8 items-start">
+            <div className="space-y-4">
+              {[
+                { 
+                  q: "How long do I have access to the course?", 
+                  a: "You get lifetime access to all course materials, including future updates and community sessions." 
+                },
+                { 
+                  q: "Do I need any prior experience?", 
+                  a: "No! Our courses are designed to take you from 'Zero to Hero'. We start from absolute basics." 
+                },
+                { 
+                  q: "Do you offer certificates?", 
+                  a: "Yes, upon successful completion of the course and final assessment, you'll receive a verified certificate." 
+                }
+              ].map((faq, i) => (
+                <div key={i} className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:border-brand-primary/30 transition-all group">
+                  <h4 className="text-lg font-bold mb-3 flex items-center gap-3">
+                    <div className="w-8 h-8 bg-brand-primary/10 rounded-full flex items-center justify-center text-brand-primary text-xs shrink-0">?</div>
+                    {faq.q}
+                  </h4>
+                  <p className="text-gray-500 leading-relaxed pl-11">{faq.a}</p>
+                </div>
+              ))}
             </div>
-            
+
             <div className="bg-white p-12 rounded-[48px] shadow-2xl shadow-gray-200/50 border border-gray-50">
-              <h3 className="text-2xl font-display font-bold mb-8">Quick Contact</h3>
+              <div className="bg-brand-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center text-brand-primary mb-8">
+                <MessageSquare size={32} />
+              </div>
+              <h3 className="text-3xl font-display font-bold mb-4">Still have questions?</h3>
+              <p className="text-gray-500 mb-10">Our career counselors are ready to help you pick the right path for your future.</p>
+              
               <form className="space-y-6">
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
@@ -490,7 +575,10 @@ export const Courses = () => {
                   <label className="text-xs font-bold uppercase tracking-wider text-gray-400">Your Message</label>
                   <textarea className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 focus:outline-none focus:border-brand-primary transition-all h-32" placeholder="How can we help you?"></textarea>
                 </div>
-                <button className="w-full bg-brand-dark text-white py-4 rounded-xl font-bold hover:bg-brand-primary transition-all shadow-xl">Send Message</button>
+                <button className="w-full bg-brand-dark text-white py-4 rounded-xl font-bold hover:bg-brand-primary transition-all shadow-xl flex items-center justify-center gap-2">
+                  Send Message
+                  <ArrowRight size={18} />
+                </button>
               </form>
             </div>
           </div>
